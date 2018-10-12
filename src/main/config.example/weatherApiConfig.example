@@ -1,0 +1,4 @@
+//Vi håller api nyckalarna här för att hålla dom utanför gitprojektet
+public class weatherApiConfig {
+    public static String API = "APIKEY";
+}
