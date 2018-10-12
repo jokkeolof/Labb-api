@@ -1,0 +1,6 @@
+#EXAMPLE CONFIGURATION FOR TWITTER API KEYS
+debug=true
+oauth.consumerKey=*********************
+oauth.consumerSecret=******************************************
+oauth.accessToken=**************************************************
+oauth.accessTokenSecret=******************************************
