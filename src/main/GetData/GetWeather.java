@@ -17,18 +17,24 @@ public class GetWeather {
     private String forecast = "http://api.openweathermap.org/data/2.5/forecast?";
     private String sun = "https://api.sunrise-sunset.org/json?";
     private String API_key = weatherApiConfig.API;
-    
-    
+    private String forecastURL;
+
+
+    //Konstruktor som tar platsen som en inparameter
+    public GetWeather(String location) {
+        forecastURL = forecast + "q=" + location + "&appid=" + API_key;
+    }
 
 
     /**
      * Get the document we are looking for..
      *
      */
-    public void getDocument() {
+    public String getDocument() {
 
         // Bygger ihop URLen vi skall skicka frågan till openweather API
-        String url = getFullUrl();
+        String url = forecastURL;
+        String FinishedWeatherString = null;
 
         try {
             URL furl = new URL(url);
@@ -131,36 +137,41 @@ public class GetWeather {
             String weather_day4 = (String) weather_d4_obj.get("description");
             String weather_day5 = (String) weather_d5_obj.get("description");
             
-            // Skriver ut väder och temperatur
-            
-            System.out.println(date_day1 + " väder: " + WeatherTranslation(weather_day1) + " - temperatur: " + tempDay1_Celsius + " grader"); 
-            System.out.println(date_day2 + " väder: " + WeatherTranslation(weather_day2) + " - temperatur: " + tempDay2_Celsius + " grader"); 
-            System.out.println(date_day3 + " väder: " + WeatherTranslation(weather_day3) + " - temperatur: " + tempDay3_Celsius + " grader"); 
-            System.out.println(date_day4 + " väder: " + WeatherTranslation(weather_day4) + " - temperatur: " + tempDay4_Celsius + " grader"); 
-            System.out.println(date_day5 + " väder: " + WeatherTranslation(weather_day5) + " - temperatur: " + tempDay5_Celsius + " grader"); 
-            
+
             // Gör ett Objekt över stad (som innehåller lat och long).
-            
+
             JSONObject city =  obj_JSONObject.getJSONObject("city");
             JSONObject coord =  city.getJSONObject("coord");
-            
+
             // Kordinater att skicka in i metoden för soluppgång
             Double lat = coord.getDouble("lat");
             Double lng = coord.getDouble("lon");
-            
-            System.out.println("kordinater " + lat + "   " + lng);
-       
 
-           
-            
-            
-       
-            
+            System.out.println("kordinater " + lat + "   " + lng);
+
+
+
+            // Skriver ut väder och temperatur
+             FinishedWeatherString = "idag" + " väder: " + WeatherTranslation(weather_day1) + " TEMP: " + tempDay1_Celsius + "°C " +
+                                           "imorn" + " väder: " + WeatherTranslation(weather_day2) + " TEMP: " + tempDay2_Celsius + "°C " +
+                                           date_day3 + " väder: " + WeatherTranslation(weather_day3) + " TEMP: " + tempDay3_Celsius + "°C " +
+                                           date_day4 + " väder: " + WeatherTranslation(weather_day4) + " TEMP: " + tempDay4_Celsius + "°C " +
+                                           date_day5 + " väder: " + WeatherTranslation(weather_day5) + " TEMP: " + tempDay5_Celsius + "°C ";
+           // System.out.println(date_day1 + " väder: " + WeatherTranslation(weather_day1) + " - temperatur: " + tempDay1_Celsius + " grader");
+           // System.out.println(date_day2 + " väder: " + WeatherTranslation(weather_day2) + " - temperatur: " + tempDay2_Celsius + " grader");
+           // System.out.println(date_day3 + " väder: " + WeatherTranslation(weather_day3) + " - temperatur: " + tempDay3_Celsius + " grader");
+           // System.out.println(date_day4 + " väder: " + WeatherTranslation(weather_day4) + " - temperatur: " + tempDay4_Celsius + " grader");
+           // System.out.println(date_day5 + " väder: " + WeatherTranslation(weather_day5) + " - temperatur: " + tempDay5_Celsius + " grader");
+
+
+
+
 
         } catch (Exception e) {
             e.printStackTrace();
         }
 
+        return FinishedWeatherString;
     }
     // Oanvänd metod som bygger URL som hämtar soluppgång och solnedgång.
     // Kräver att man skickar in latitud och longitud från JSONobjektet/Staden från SMHI
@@ -170,7 +181,10 @@ public class GetWeather {
     	
     	return sun + "lat=" + lat + "&lng=" + lng + "callback=mycallback";	
     }
-    
+    /*
+
+    Denna metod används inte om vi specificerar staden för väder i kontruktorn
+
     public String getFullUrl() {
     	
     	System.out.println("Vilken Stad vill du hämta väderrapport från?: (åäö =aao)");
@@ -179,10 +193,10 @@ public class GetWeather {
     	String town = scan.nextLine();
     	
     	return forecast + "q=" + town + "&appid=" + API_key;
-    	
+
         
     }
-    
+    */
     public static double Kelvin_to_Celsius(double Kelvin) throws NumberFormatException, IOException
     
     {
@@ -193,12 +207,15 @@ public class GetWeather {
         return celsius_rounded;
     
     }
-    
+
+
+    //Metoden översätter det vi får från API på engelska till svenska
     public static String WeatherTranslation(String in_eng) 
     {
     	if (in_eng.equalsIgnoreCase("Clear sky")) {return "Klar himmel";}
     	if (in_eng.equalsIgnoreCase("Nearly clear sky")) {return "Nästan klar himmel";}
     	if (in_eng.equalsIgnoreCase("Variable cloudiness")) {return "Varierande molnighet";}
+        if (in_eng.equalsIgnoreCase("few clouds")) {return "Lätt molnighet";}
     	if (in_eng.equalsIgnoreCase("Halfclear sky")) {return "Halvklar himmel";}
     	if (in_eng.equalsIgnoreCase("Cloudy sky")) {return "Molnig himmel";}
     	if (in_eng.equalsIgnoreCase("Overcast")) {return "Mulet";}

@@ -1,4 +1,5 @@
 
+
 public class start {
 
     //Main entry point
@@ -6,9 +7,11 @@ public class start {
     {
 
 
-        GetWeather me = new GetWeather ();
+      // GetWeather me = new GetWeather ("Stockholm");
+      // System.out.println(me.getDocument());
+
+       GetTwitter.GetStatusUpdates();
 
 
-        me.getDocument();
     }
 }
