@@ -9,12 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 public class GetTwitter {
-    List<String> tweetersTimeout = new ArrayList<String>(); //Detta skulle man kunna lägga in i en database för att få lite mer statistik
-
-    //A user will get temporary banned after asking for a status update
-    public static void CheckForBannedUser() {
-
-    }
+    
 
     //Metoden tar strängen som användaren skriver in ex "@vadforvader Malmö" och rensar bort allt utom just malmö. Om användaren skulle skriva ex "@vadforvader Malmö hej på dig"
     public static String SplitString(String userInput) {
