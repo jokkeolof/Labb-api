@@ -18,21 +18,28 @@ public class GetTwitter {
 
     //Metoden tar strängen som användaren skriver in ex "@vadforvader Malmö" och rensar bort allt utom just malmö. Om användaren skulle skriva ex "@vadforvader Malmö hej på dig"
     public static String SplitString(String userInput) {
-        String splitString = userInput;
+        int index = 0;
+        String searchValue = "@vadforvader"; // Vi skapar denna här så det ska vara lätt att ändra på senare
+        String inputFromTwitterUser = userInput; //Input strängen vi får från twitter
         String[] tempArray;
 
-        /* delimiter */
-        String delimiter = " ";
+        String delimiter = "\\s+";
 
-        /* given string will be split by the argument delimiter provided. */
-        tempArray = splitString.split(delimiter);
+        tempArray = inputFromTwitterUser.split(delimiter);
 
-        /* print substrings */
-        for (int i = 0; i < tempArray.length; i++) {
+        for(int i = 0; i < tempArray.length; i++) {
+            System.out.println(tempArray[i]);
         }
-        System.out.println(tempArray[1]);
 
-        return tempArray[1];
+        for (int i = 0; i <= tempArray.length - 1; i++) {
+
+            if (searchValue.contains(tempArray[i])) {
+                index = i;
+                System.out.println("hittade @vadforvader på index " + index);
+
+            }
+        }
+        return tempArray[index + 1]; //Returna värdet @vadförvader men lägg till +1 för att få orten som kommer efter man frågat boten
     }
 
     //Metoden använder vi för att hämta statusuppdateringar som innehåller @vadforvader
