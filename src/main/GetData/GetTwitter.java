@@ -9,36 +9,38 @@ import java.util.Date;
 import java.util.List;
 
 public class GetTwitter {
-    
+
+    private String botValue;
+
+    //Konstruktor som sätter vilket @namn vi ska kolla på
+    public GetTwitter(String botName) {
+        botValue = botName;
+    }
 
     //Metoden tar strängen som användaren skriver in ex "@vadforvader Malmö" och rensar bort allt utom just malmö. Om användaren skulle skriva ex "@vadforvader Malmö hej på dig"
-    public static String SplitString(String userInput) {
+    public String SplitString(String userInput) {
         int index = 0;
-        String searchValue = "@vadforvader"; // Vi skapar denna här så det ska vara lätt att ändra på senare
+        String bot = "@" + botValue;
         String inputFromTwitterUser = userInput; //Input strängen vi får från twitter
         String[] tempArray;
 
-        String delimiter = "\\s+";
+        String delimiter = "\\s+"; //Ett regex expression som kollar efter spaces i en sträng (e.g " "). Detta expression tar då bort alla spaces. Alltså även (e.g "  ")
 
-        tempArray = inputFromTwitterUser.split(delimiter);
+        tempArray = inputFromTwitterUser.split(delimiter);//Splitar strängen som vi får från twittar till en temporär array, tar bort alla spaces
 
-        for(int i = 0; i < tempArray.length; i++) {
-            System.out.println(tempArray[i]);
-        }
 
+        //for loopen går igenom arrayen och letar efter @namn (alltså namnet på botten
         for (int i = 0; i <= tempArray.length - 1; i++) {
 
-            if (searchValue.contains(tempArray[i])) {
+            if (bot.contains(tempArray[i])) {
                 index = i;
-                System.out.println("hittade @vadforvader på index " + index);
-
             }
         }
         return tempArray[index + 1]; //Returna värdet @vadförvader men lägg till +1 för att få orten som kommer efter man frågat boten
     }
 
     //Metoden använder vi för att hämta statusuppdateringar som innehåller @vadforvader
-    public static void GetStatusUpdates() {
+    public void GetStatusUpdates() {
 
         //En ny Twitterlyssnare, detta interface implementerar flera metoder vi behöver ta in.. Bara onStatus() använder vi dock
         StatusListener listener = new StatusListener(){
@@ -62,6 +64,7 @@ public class GetTwitter {
             public void onStallWarning(StallWarning warning) {
                 System.out.println("Got stall warning:" + warning);
             }
+
 
             //När vi får in en statusuppdatering som innehåller @vadforvader.
             @Override
