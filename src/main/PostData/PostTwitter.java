@@ -4,11 +4,8 @@ import twitter4j.*;
 
 public class PostTwitter {
 
-    /*
-        TODO: filen twitter4j.properties håller 0auth nycklarna för att kunna posta mot twitter. Detta får du via din twitter developer konto
-        TODO: Här kan vi även ta upp säkerhetsbiten. Filen innehåller en privat token som man absolut inte ska dela ut, går denna fil att säkra ytterligare eller bara se till att ingen kan få tag på den?
-     */
 
+    //Metoden tar användarnamnet + väderinfo som ska skickas
     public PostTwitter(String username, String weatherInfo) {
 
 
@@ -18,7 +15,7 @@ public class PostTwitter {
 
         //Bygger upp texten som vi skickar till användaren
         String twitterUpdateText = "@" + username + " " + weatherInfo;
-        Status status = null; //Initierar en variabel av typen Status
+        Status status; //Initierar en variabel av typen Status
 
         //updateStatus() kan slänga ett TwitterException så vi måste hantera det
 

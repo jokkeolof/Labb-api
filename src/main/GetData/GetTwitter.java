@@ -17,6 +17,7 @@ public class GetTwitter {
         botValue = botName;
     }
 
+
     //Metoden tar strängen som användaren skriver in ex "@vadforvader Malmö" och rensar bort allt utom just malmö. Om användaren skulle skriva ex "@vadforvader Malmö hej på dig"
     public String SplitString(String userInput) {
         int index = 0;
@@ -37,7 +38,7 @@ public class GetTwitter {
             }
         }
         return tempArray[index + 1]; //Returna värdet @vadförvader men lägg till +1 för att få orten som kommer efter man frågat boten
-    }
+    } //END Splitstring
 
     //Metoden använder vi för att hämta statusuppdateringar som innehåller @vadforvader
     public void GetStatusUpdates() {
