@@ -17,7 +17,7 @@ public class PostTwitter {
         String twitterUpdateText = "@" + username + " " + weatherInfo;
         Status status; //Initierar en variabel av typen Status
 
-        //updateStatus() kan slänga ett TwitterException så vi måste hantera det
+        //Skickar statusuppdateringen
 
         try{
             status = twitter.updateStatus(twitterUpdateText);
