@@ -1,5 +1,5 @@
 # Labb-api
-## Twitter Bot som hämtar väderdata dom närmaste 5 dagar.
+## Twitter Bot som hämtar väderdata dom närmaste 5 dagar. 
 
 
 ## Setup
